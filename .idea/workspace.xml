@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ad00afd-42ed-43a8-afc9-8f669e9b98aa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,17 +23,17 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Makefile" value="118" />
+          <entry key="Makefile" value="148" />
           <entry key="dat" value="31" />
           <entry key="md" value="2" />
-          <entry key="py" value="6375" />
+          <entry key="py" value="6670" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Markdown" value="2" />
-          <entry key="PLAIN_TEXT" value="149" />
-          <entry key="Python" value="6375" />
+          <entry key="PLAIN_TEXT" value="179" />
+          <entry key="Python" value="6670" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -58,24 +58,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-720">
-              <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="127" selection-end-column="4" />
+            <state relative-caret-position="187">
+              <caret line="156" column="26" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1539843523310" expanded="true" signature="106:188" ph="..." />
-                <marker date="1539843523310" expanded="true" signature="1692:1694" ph="..." />
-                <marker date="1539843523310" expanded="true" signature="1738:3745" ph="..." />
-                <marker date="1539843523310" expanded="true" signature="3526:3725" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+              <caret line="1" column="42" selection-start-line="1" selection-start-column="42" selection-end-line="1" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -98,6 +99,7 @@
       <find>len(</find>
       <find>/ len(</find>
       <find>f</find>
+      <find>cross</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -225,7 +227,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3313253" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.17951807" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003524" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49964765" weight="0.32891566" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -335,23 +337,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+          <caret line="1" column="42" selection-start-line="1" selection-start-column="42" selection-end-line="1" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-720">
-          <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="127" selection-end-column="4" />
+        <state relative-caret-position="187">
+          <caret line="156" column="26" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1539843523310" expanded="true" signature="106:188" ph="..." />
-            <marker date="1539843523310" expanded="true" signature="1692:1694" ph="..." />
-            <marker date="1539843523310" expanded="true" signature="1738:3745" ph="..." />
-            <marker date="1539843523310" expanded="true" signature="3526:3725" ph="..." />
           </folding>
         </state>
       </provider>

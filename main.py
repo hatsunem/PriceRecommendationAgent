@@ -23,15 +23,13 @@ def standardize(X):
     return z_score
 
 
-def draw_graph(classifier, X, Y, S):
+def draw_graph(classifier, X, Y, graph_title):
+    title(graph_title)
     for i in range(len(X)):
         if Y[i] == 1:
             plot(X[i, 0], X[i, 1], 'rx')
         else:
             plot(X[i, 0], X[i, 1], 'bx')
-
-    for n in S:
-        scatter(X[n, 0], X[n, 1], s=80, c='g', marker='o')
 
     min_x1 = np.min(X, axis=0)[0]
     max_x1 = np.max(X, axis=0)[0]
@@ -81,6 +79,7 @@ def get_classifier(X, Y, kernel, isSoft, c):
         h = cvxopt.matrix(np.zeros(N))
     A = cvxopt.matrix(Y, (1, N), 'd')
     b = cvxopt.matrix(0.0)
+    cvxopt.solvers.options['show_progress'] = False
     try:
         sol = solvers.qp(P, q, G, h, A, b)
     except ValueError:
@@ -124,9 +123,6 @@ def get_classifier(X, Y, kernel, isSoft, c):
             evl_sum += a[n] * Y[n] * kernel(X[n], x)
         return evl_sum - th
 
-    if dim == 2:
-        draw_graph(classifier, X, Y, sv_idx)
-
     return classifier
 
 
@@ -158,7 +154,7 @@ def main(args):
     number_of_group = args.cross
     size_of_group = N // number_of_group
 
-    param = np.arange(8, 8.2, 0.1)
+    param = np.arange(1, 200, 1)
     accuracies = []
     for p in param:
         if kernel_type == "p":
@@ -176,6 +172,8 @@ def main(args):
             training_X = np.vstack((X[:i*size_of_group], X[(i+1)*size_of_group:]))
             training_Y = Y[:i * size_of_group] + Y[(i + 1) * size_of_group:]
             classifier = get_classifier(training_X, training_Y, kernel, isSoft, c)
+            # if dim == 2:
+            #     draw_graph(classifier, X, Y, "param:" + str(p) + ", group:" + str(i))
             correct = 0
             for j in range(len(test_X)):
                 result = sign(classifier(test_X[j]))
@@ -183,8 +181,9 @@ def main(args):
                     correct += 1
 
             accuracy_sum += correct / len(test_X)
-        accuracies.append(accuracy_sum / number_of_group)
-    print(accuracies)
+        accuracy_avg = accuracy_sum / number_of_group
+        print("Param:", p, "Accuracy:", accuracy_avg)
+        accuracies.append(accuracy_avg)
     plot(param, accuracies)
     show()
 
@@ -195,6 +194,6 @@ if __name__ == '__main__':
     parser.add_argument("-k", "--kernel", help="select kernel type (g: gaussian, p: polynomial)", type=str, default="n")
     parser.add_argument("--soft", help="use soft margin SVM", action="store_true")
     parser.add_argument("-c", "--cost", help="set regularization parameter", type=int, default=0.5)
-    parser.add_argument("--cross", help="set regularization parameter", type=int, default=1)
+    parser.add_argument("--cross", help="set regularization parameter", type=int, default=2)
     parsed_args = parser.parse_args()
     main(parsed_args)
