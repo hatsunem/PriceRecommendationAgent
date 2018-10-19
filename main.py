@@ -13,7 +13,7 @@ def polynomial_kernel():
 
 
 def normal_kernel():
-    return lambda x_k, x_l: np.dot(x_k, x_l)
+    return lambda x_k, x_l, _: np.dot(x_k, x_l)
 
 
 def standardize(X):
@@ -108,8 +108,8 @@ def main(args):
         kernel = gaussian_kernel()
         param = np.logspace(-10, 39, 50, base=2)
     else:
-        print("[ERROR]Set kernel.")
-        return
+        kernel = normal_kernel()
+        param = [1]
     accuracies = []
     for p in param:
         # cross validation
@@ -135,6 +135,8 @@ def main(args):
         plot(param, accuracies)
     elif kernel_type == "g":
         plot(log2(param), accuracies)
+    else:
+        return
     show()
 
 
