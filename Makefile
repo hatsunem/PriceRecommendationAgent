@@ -1,2 +1,5 @@
 example: main.py
-	python main.py sample_circle.dat -k g --cross 5
+	python main.py sample10.dat
+
+cross: cross.py
+	python cross.py sample10.dat -k g --cross 5
