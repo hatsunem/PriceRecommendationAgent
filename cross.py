@@ -17,13 +17,6 @@ def normal_kernel():
     return lambda x_k, x_l, _: np.dot(x_k, x_l)
 
 
-def standardize(X):
-    x_mean = X.mean(axis=0, keepdims=True)
-    x_std = np.std(X, axis=0, keepdims=True)
-    z_score = (X - x_mean) / x_std
-    return z_score
-
-
 def get_classifier(X, Y, kernel, p, c, eps):
     # Quadratic programming problem
     N = len(X)
@@ -91,7 +84,7 @@ def main(args):
     # set data
     file = args.file
     kernel_type = args.kernel
-    C = [1, 10, 100, 1000]
+    C = [100, 1000]
     epsilon = [0.1, 0.01]
 
     if ".csv" in file:
@@ -110,14 +103,13 @@ def main(args):
             y_i = np.array(i[dim])
             X = np.append(X, x_i, axis=0)
             Y = np.append(Y, y_i, axis=None)
-    # X = standardize(X)
 
     if kernel_type == "p":
         kernel = polynomial_kernel()
-        param = np.arange(0, 14, 1)
+        param = np.arange(0, 3, 1)
     elif kernel_type == "g":
         kernel = gaussian_kernel()
-        param = np.logspace(-10, 19, 30, base=2)
+        param = np.logspace(-3, 9, 13, base=2)
     else:
         kernel = normal_kernel()
         param = [1]
@@ -133,16 +125,29 @@ def main(args):
     for c in C:
         for eps in epsilon:
             mses = []
+            accuracies = []
             for p in param:
                 # cross validation
                 mse_sum = 0
+                accuracy_sum = 0
+                simple_agent_accuracy_sum = 0
                 for i in range(number_of_group):
                     classifier, S = get_classifier(training_X[i], training_Y[i], kernel, p, c, eps)
                     pred_Y = [classifier(x) for x in test_X[i]]
                     mse_sum += np.sum((test_Y[i] - pred_Y) ** 2) / len(test_X[i])
+                    market_price_sum = np.sum(test_Y[i])
+                    selling_item = np.array([pred_y - 50 for pred_y, test_y in zip(pred_Y, test_Y[i]) if pred_y - 50 < test_y])
+                    selling_price_sum = np.sum(selling_item)
+                    accuracy_sum += selling_price_sum / market_price_sum
+                    simple_agent_accuracy_sum += \
+                        np.sum(np.array([151.39 for test_y in test_Y[i] if 151.39 < test_y])) / market_price_sum
                 mse_avg = mse_sum / number_of_group
+                accuracy_avg = accuracy_sum / number_of_group
+                simple_accuracy_avg = simple_agent_accuracy_sum / number_of_group
                 mses.append(mse_avg)
-                print("cost: " + str(c) + ", eps: " + str(eps) + ", param: " + str(p) + ", mse: " + str(mse_avg))
+                accuracies.append(accuracy_avg)
+                print("cost: " + str(c) + ", eps: " + str(eps) + ", param: " + str(p) + ", mse: " + str(mse_avg) +
+                      ", accuracy: " + str(accuracy_avg) + ", simple_accuracy: " + str(simple_accuracy_avg))
             if kernel_type == "p":
                 plot(param, mses, label="c = " + str(c) + ", e = " + str(eps))
             elif kernel_type == "g":

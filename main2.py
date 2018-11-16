@@ -3,6 +3,7 @@ import cvxopt
 from cvxopt import solvers
 from pylab import *
 import csvreader
+import random
 
 
 def gaussian_kernel(sigma):
@@ -103,19 +104,32 @@ def main(args):
     classifier, S = get_classifier(training_X, training_Y, kernel, 100, 0.01)
 
     # evaluate performance
-    selling_price = [max(classifier(x) - 37, 0) for x in test_X]
-    sold_items = np.array(
-        [selling_price for selling_price, test_y in zip(selling_price, test_Y) if selling_price < test_y])
-    total_sales = np.sum(sold_items)
+    ver2_selling_price = [p if p > 30 else 0 for p in [classifier(x) - random.uniform(30, 60) for x in test_X]]
+    ver2_selling_items = [i for i in ver2_selling_price if i > 30]
+
+    ver1_selling_price = [max(classifier(x) - 37, 0) for x in test_X]
+
+    ver2_sold_items = np.array(
+        [selling_price for selling_price, ver1, test_y in zip(ver2_selling_price, ver1_selling_price, test_Y)
+         if selling_price < test_y and selling_price < ver1])
+    ver2_total_sales = np.sum(ver2_sold_items)
+
+    ver1_sold_items = np.array(
+        [selling_price for selling_price, ver2, test_y in zip(ver1_selling_price, ver2_selling_price, test_Y)
+         if selling_price < test_y and (selling_price < ver2 or ver2 == 0)])
+    ver1_total_sales = np.sum(ver1_sold_items)
 
     simple_selling_price = np.average(training_Y)
-    simple_sold_items = np.array([simple_selling_price for test_y in test_Y if simple_selling_price < test_y])
+    simple_sold_items = np.array(
+        [simple_selling_price for test_y, ver1 in zip(test_Y, ver1_selling_price)
+         if simple_selling_price < test_y and simple_selling_price < ver1])
     simple_total_sales = np.sum(simple_sold_items)
 
-    print("\n----------------- My Agent -----------------")
-    print("sold items : " + str(len(sold_items)))
-    print("total sales : " + str(total_sales))
-    print("efficiency : " + str((total_sales / 100) / (np.sum(test_Y) / 100)))
+    print("\n----------------- My Agent Ver2-----------------")
+    print("selling items : " + str(len(ver2_selling_items)))
+    print("sold items : " + str(len(ver2_sold_items)))
+    print("total sales : " + str(ver2_total_sales))
+    print("efficiency : " + str((ver2_total_sales / len(ver2_selling_items)) / (np.sum(test_Y) / 100)))
     print("\n----------------- Simple Agent -----------------")
     print("sold items : " + str(len(simple_sold_items)))
     print("total sales : " + str(simple_total_sales))
@@ -123,7 +137,6 @@ def main(args):
     print("\n----------------- Ideal -----------------")
     print("sold items : " + str(len(test_Y)))
     print("total sales : " + str(np.sum(test_Y)))
-    # print((total_sales / 100) / (np.sum(test_Y) / 100) - (simple_total_sales / 100) / (np.sum(test_Y) / 100))
 
 
 if __name__ == '__main__':
